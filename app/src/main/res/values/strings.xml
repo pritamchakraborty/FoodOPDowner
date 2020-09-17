@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Foodopd owner</string>
+
+    <string name="navopen">open drawer</string>
+    <string name="rationale_camera">This app needs access to your camera so you can take pictures.</string>
+
+    <string name="navclose">close drawer</string>
+    <string name="access_token" translatable="false">sk.eyJ1IjoiYWJkdWw5ODQ5LSIsImEiOiJjazl0aWlzNDkxZWJiM2xxY2c0b3Q0aXkyIn0.a4SOUB0UnyYLgqD0C84HJw</string>
+    <string name="user_location_permission_explanation">This app needs location permissions to show its functionality.</string>
+    <string name="user_location_permission_not_granted">You didn\'t grant location permissions.</string>
+
+
+    <array name="Person">
+
+        <item>SELF</item>
+        <item>DRIVER</item>
+        <item>REJECT</item>
+
+    </array>
+    <array name="details">
+        <item>Order-Details</item>
+        <item>Print</item>
+    </array>
+    <array name="category">
+
+        <item>Italian</item>
+        <item>Indian</item>
+        <item>Chinese</item>
+        <item>Greek</item>
+        <item>American</item>
+    </array>
+    <!-- <array name="Category">
+        <item>Italian</item>
+        <item>Indian</item>
+        <item>Chinese</item>
+        <item>Greek</item>
+        <Item>American</Item>
+
+    </array>-->
+</resources>
+

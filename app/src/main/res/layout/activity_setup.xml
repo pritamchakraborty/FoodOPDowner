@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgcolor"
+    tools:context=".Activities.Setup">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/toolbg">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Foodopd Owner"
+                    android:textSize="20dp"
+                    android:paddingRight="17dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"/>
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="BUSINESS SETUP"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Your Details"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="#F1CB58"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:textSize="20dp"/>
+
+            <EditText
+                android:id="@+id/edit_firstname"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:textSize="18sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="First Name"
+                android:inputType="textPersonName"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <EditText
+                android:id="@+id/edit_lastname"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Last Name"
+                android:imeOptions="actionNext"
+                android:textSize="18sp"
+                android:inputType="textPersonName"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <EditText
+                android:id="@+id/edit_emailid"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="18sp"
+                android:layout_marginRight="20dp"
+                android:hint="Email Id"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <Button
+                android:id="@+id/btn_verify_email"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="10dp"
+                android:textSize="10sp"
+                android:visibility="gone"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_gravity="right|end"
+                android:background="@color/toolbg"
+                android:text="Verify Email"
+                android:onClick="Next"
+                android:textColor="@color/black" />
+
+            <ProgressBar
+                android:id="@+id/pbHeaderProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:layout_weight="2" >
+            </ProgressBar>
+
+
+            <EditText
+                android:id="@+id/edit_emailverification"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="18sp"
+                android:visibility="gone"
+                android:focusable="true"
+                android:layout_marginRight="20dp"
+                android:hint="Enter Verfication Code"
+                android:singleLine="true"
+                android:inputType="number"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <EditText
+                android:id="@+id/edit_mobilenumber"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Mobile Number"
+                android:inputType="phone"
+                android:textSize="18sp"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+
+            <EditText
+                android:id="@+id/edit_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Password"
+                android:textSize="18sp"
+                android:singleLine="true"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <EditText
+                android:id="@+id/edit_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Confirm Password"
+                android:textSize="18sp"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <Button
+                android:id="@+id/nextbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/toolbg"
+                android:text="NEXT"
+                android:onClick="Next"
+                android:textColor="@color/black" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

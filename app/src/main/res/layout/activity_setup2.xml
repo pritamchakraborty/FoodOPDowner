@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgcolor"
+    tools:context=".Activities.Setup">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/toolbg">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Foodopd Owner"
+                    android:textSize="20dp"
+                    android:paddingRight="17dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"/>
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="BUSINESS SETUP"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buisness Details"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="#F1CB58"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:textSize="20dp"/>
+
+            <EditText
+                android:id="@+id/edit_businessname"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:textSize="18sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Buisness Name"
+                android:inputType="textPersonName"
+                android:imeOptions="actionNext"
+                android:singleLine="false"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <EditText
+                android:id="@+id/edit_address"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Address"
+                android:imeOptions="actionNext"
+                android:textSize="18sp"
+                android:inputType="textPersonName"
+                android:singleLine="false"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <EditText
+                android:id="@+id/edit_Street"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Street"
+                android:imeOptions="actionNext"
+                android:textSize="18sp"
+                android:inputType="textPersonName"
+                android:singleLine="false"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <EditText
+                android:id="@+id/edit_city"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="18sp"
+                android:layout_marginRight="20dp"
+                android:hint="City"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:singleLine="false"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <EditText
+                android:id="@+id/edit_pin"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="18sp"
+                android:layout_marginRight="20dp"
+                android:hint="Pin"
+                android:singleLine="true"
+                android:inputType="number"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <EditText
+                android:id="@+id/edit_country"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Country"
+                android:textSize="18sp"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+
+            <EditText
+                android:id="@+id/edit_buisness_phone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Buisness Phone"
+                android:textSize="18sp"
+                android:singleLine="true"
+                android:inputType="phone"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <EditText
+                android:id="@+id/edit_deliverypin"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Delivery boy Pin :4 digit"
+                android:textSize="18sp"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Business ID"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="#F1CB58"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="40dp"
+                android:textSize="20dp"/>
+
+
+            <EditText
+                android:id="@+id/edit_buisness_id"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:textSize="18sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Buisness ID"
+                android:inputType="number"
+                android:editable="false"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Click to add storefront picture"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="#F1CB58"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="40dp"
+                android:textSize="20dp"/>
+
+
+            <ImageView
+                android:id="@+id/image_view_logo"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/camera"
+                android:background="@drawable/image_view_border"
+                android:layout_gravity="center"
+                android:layout_marginTop="35dp"/>
+
+            <Button
+                android:id="@+id/nextbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/toolbg"
+                android:text="NEXT"
+                android:onClick="Next"
+                android:textColor="@color/black" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

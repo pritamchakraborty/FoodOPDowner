@@ -1,0 +1,3 @@
+include ':delivery-boy'
+rootProject.name='Foodopd owner'
+include ':app'

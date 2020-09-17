@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgcolor"
+    tools:context=".Activities.Setup">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/toolbg">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Foodopd Owner"
+                    android:textSize="20dp"
+                    android:paddingRight="17dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"/>
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="BUSINESS SETUP"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Franchise Option"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="#F1CB58"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:textSize="20dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="45dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Franchise/Multistore"
+                    android:textColor="@color/black"
+                    android:gravity="left"
+                    android:layout_marginLeft="25dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="35dp"
+                    android:textSize="20dp"/>
+
+                <Switch
+                    android:id="@+id/simpleSwitch"
+                    android:text="YES"
+                    android:layout_marginLeft="-150dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edit_franchise_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:textSize="18sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Franchise Name"
+                android:inputType="textPersonName"
+                android:imeOptions="actionNext"
+                android:singleLine="false"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <EditText
+                android:id="@+id/edit_franchise_email"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:textSize="18sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Franchise Email"
+                android:inputType="textPersonName"
+                android:imeOptions="actionNext"
+                android:singleLine="false"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <EditText
+                android:id="@+id/edit_franchise_phone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:textSize="18sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Franchise Phone"
+                android:inputType="textPersonName"
+                android:imeOptions="actionNext"
+                android:singleLine="false"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <EditText
+                android:id="@+id/edit_francise_contact_person"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:textSize="18sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Franchise Contact Person"
+                android:inputType="textPersonName"
+                android:imeOptions="actionNext"
+                android:singleLine="false"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+
+            <EditText
+                android:id="@+id/edit_store_id"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:textSize="18sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Store ID: If yes"
+                android:inputType="textPersonName"
+                android:imeOptions="actionNext"
+                android:singleLine="false"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Business ID"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="#F1CB58"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="40dp"
+                android:textSize="20dp"/>
+
+
+            <EditText
+                android:id="@+id/edit_buisness_id"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:textSize="18sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Buisness ID"
+                android:inputType="number"
+                android:editable="false"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <EditText
+                android:id="@+id/edit_sales_tax"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:textSize="18sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Sales Tax"
+                android:inputType="number"
+                android:editable="false"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <EditText
+                android:id="@+id/edit_surcharge"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:textSize="18sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Surcharge"
+                android:inputType="number"
+                android:editable="false"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rectangleedittext"/>
+
+            <CheckBox
+                android:id="@+id/cb_transaction"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginTop="25dp"
+                android:layout_gravity="center_horizontal"
+                android:text="I authorize to pay a transaction fee"
+                android:checked="true"
+                />
+
+            <TextView
+                android:id="@+id/tv_transaction_fee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textSize="15dp"
+                android:textColor="@color/white"
+                android:layout_gravity="center_horizontal"
+                android:text=""/>
+
+            <Button
+                android:id="@+id/nextbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/toolbg"
+                android:text="NEXT"
+                android:onClick="Next"
+                android:textColor="@color/black" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
