@@ -5,13 +5,17 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +33,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class Setup2 extends AppCompatActivity {
+    private static final String TAG = "this";
     Button btn_next;
     private static final int CAMERA_REQUEST = 1888;
     EditText buisness_name, address, street, city, pin, country, buisness_phone, delivery_boy_pin, edit_buisness_id;
@@ -82,7 +87,8 @@ public class Setup2 extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveBuisnessDetails();
+                checkInternetConenction();
+
             }
         });
 
@@ -102,11 +108,12 @@ public class Setup2 extends AppCompatActivity {
         js.addProperty("country", country.getText().toString());
         js.addProperty("delivery_boy_pin", delivery_boy_pin.getText().toString());
         js.addProperty("business_logo", photoUrl);
+        js.addProperty("pin", pin.getText().toString());
 
 
         apiInterface = Api_Client.getClient().create(User_Service.class);
         Call<JsonObject> call = apiInterface.buisness_setup(owner_id,buisness_id,buisness_name.getText().toString(),address.getText().toString(),street.getText().toString()
-        ,city.getText().toString(),buisness_phone.getText().toString(),country.getText().toString(),delivery_boy_pin.getText().toString(),photoUrl);
+        ,city.getText().toString(),buisness_phone.getText().toString(),country.getText().toString(),delivery_boy_pin.getText().toString(),photoUrl,pin.getText().toString());
 
         call.enqueue(new retrofit2.Callback<JsonObject>() {
 
@@ -119,6 +126,10 @@ public class Setup2 extends AppCompatActivity {
                     if (js.get("status").getAsString().equalsIgnoreCase("success")) {
                         Toast.makeText(Setup2.this, "Saved", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(Setup2.this, Setup3.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("buisness_id",buisness_id);
+                        bundle.putString("owner_id",owner_id);
+                        intent.putExtras(bundle);
                         startActivity(intent);
 
                     } else {
@@ -181,5 +192,50 @@ public class Setup2 extends AppCompatActivity {
                 new String[]{Manifest.permission.CAMERA},
                 0);
     }
+
+    public boolean checkInternetConenction() {
+
+        ConnectivityManager connec
+                =(ConnectivityManager)getSystemService(getBaseContext().CONNECTIVITY_SERVICE);
+
+        // Check for network connections
+        if ( connec.getNetworkInfo(0).getState() ==
+                NetworkInfo.State.CONNECTED ||
+                connec.getNetworkInfo(0).getState() ==
+                        NetworkInfo.State.CONNECTING ||
+                connec.getNetworkInfo(1).getState() ==
+                        NetworkInfo.State.CONNECTING ||
+                connec.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTED ) {
+            final ProgressDialog progressDialog = new ProgressDialog(Setup2.this);
+            progressDialog.setMessage("Logging in");
+            progressDialog.setMax(100);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
+            progressDialog.setCancelable(false);
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        Thread.sleep(5000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    progressDialog.dismiss();
+                    saveBuisnessDetails();
+                }
+
+            }).start();
+
+        }else if (
+                connec.getNetworkInfo(0).getState() ==
+                        NetworkInfo.State.DISCONNECTED ||
+                        connec.getNetworkInfo(1).getState() ==
+                                NetworkInfo.State.DISCONNECTED  ) {
+            Toast.makeText(Setup2.this, "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return false;
+
+    }
+
 
 }

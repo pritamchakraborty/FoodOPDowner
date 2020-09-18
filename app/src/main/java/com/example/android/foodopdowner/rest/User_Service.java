@@ -36,7 +36,7 @@ public interface User_Service {
     @FormUrlEncoded
     @POST("owner_business_setup")
     Call<JsonObject>buisness_setup(@Field("owner_id")String owner_id,@Field("bussiness_id")String bussiness_id,@Field("bussiness_name")String bussiness_name,@Field("address")String address,@Field("street")String street,
-                                      @Field("city")String city,@Field("phone_no")String phone_no,@Field("country")String country,@Field("delivary_boy_pin")String delivary_boy_pin,@Field("business_logo")String business_logo);
+                                      @Field("city")String city,@Field("phone_no")String phone_no,@Field("country")String country,@Field("delivary_boy_pin")String delivary_boy_pin,@Field("business_logo")String business_logo, @Field("pin")String pin);
 
     @FormUrlEncoded
     @POST("owner_login")

@@ -29,7 +29,7 @@ import retrofit2.Response;
 public class Setup3 extends AppCompatActivity {
 
     Switch franchise_switch;
-    EditText franchise_name, franchise_email, franchise_phone, franchise_contact_person, store_id, sales_tax, surcharge;
+    EditText franchise_name, edit_buisness_id, franchise_email, franchise_phone, franchise_contact_person, store_id, sales_tax, surcharge;
     CheckBox cb_transaction;
     TextView tv_transaction_fee;
     Button next_btn;
@@ -48,6 +48,7 @@ public class Setup3 extends AppCompatActivity {
 
         franchise_switch = findViewById(R.id.simpleSwitch);
         franchise_name = findViewById(R.id.edit_franchise_name);
+        edit_buisness_id = findViewById(R.id.edit_buisness_id);
         tv_transaction_fee = findViewById(R.id.tv_transaction_fee);
         franchise_email = findViewById(R.id.edit_franchise_email);
         franchise_contact_person = findViewById(R.id.edit_francise_contact_person);
@@ -58,17 +59,30 @@ public class Setup3 extends AppCompatActivity {
         cb_transaction = findViewById(R.id.cb_transaction);
         next_btn = findViewById(R.id.nextbutton);
 
+        cb_transaction.setChecked(false);
+
         cb_transaction.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 tv_transaction_fee.setVisibility(View.VISIBLE);
-                tv_transaction_fee.setText("Currently" + transaction_fee + "%");
+                tv_transaction_fee.setText("Currently" + " " + transaction_fee + "%");
             }
         });
 
         checkFranchiseStatus();
-        checkInternetConenction();
 
+        Bundle bundle = getIntent().getExtras();
+        owner_id = bundle.getString("owner_id");
+        buisness_id = bundle.getString("buisness_id");
+        edit_buisness_id.setText(buisness_id);
+
+
+        next_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkInternetConenction();
+            }
+        });
 
     }
 
@@ -130,13 +144,7 @@ public class Setup3 extends AppCompatActivity {
 
     private void SaveFranchiseData() {
 
-        Bundle bundle = getIntent().getExtras();
-        if(bundle!=null)
-        {
-            owner_id = bundle.getString("owner_id");
-            buisness_id = bundle.getString("buisness_id");
 
-        }
         JsonObject js = new JsonObject();
         js.addProperty("owner_id", owner_id);
         js.addProperty("business_id", buisness_id);
@@ -152,9 +160,9 @@ public class Setup3 extends AppCompatActivity {
 
 
         apiInterface = Api_Client.getClient().create(User_Service.class);
-        Call<JsonObject> call = apiInterface.sendFranchisedetail(owner_id,buisness_id,franchise_yes,franchise_name.getText().toString()
+        Call<JsonObject> call = apiInterface.sendFranchisedetail("17","20800842",franchise_yes,franchise_name.getText().toString()
         ,franchise_email.getText().toString(),store_id.getText().toString(),franchise_contact_person.getText().toString()
-        ,franchise_phone.getText().toString(),sales_tax.getText().toString(),surcharge.getText().toString(),transaction_fee);
+        ,franchise_phone.getText().toString(),sales_tax.getText().toString(),surcharge.getText().toString(),"10");
 
         call.enqueue(new retrofit2.Callback<JsonObject>() {
 
