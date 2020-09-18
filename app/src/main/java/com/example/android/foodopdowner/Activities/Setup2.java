@@ -99,14 +99,14 @@ public class Setup2 extends AppCompatActivity {
 
         JsonObject js = new JsonObject();
         js.addProperty("owner_id",owner_id);
-        js.addProperty("buisness_id",buisness_id);
-        js.addProperty("buisness_name", buisness_name.getText().toString());
+        js.addProperty("business_id",buisness_id);
+        js.addProperty("business_name", buisness_name.getText().toString());
         js.addProperty("address", address.getText().toString());
         js.addProperty("street", street.getText().toString());
         js.addProperty("city", city.getText().toString());
         js.addProperty("phone_no", buisness_phone.getText().toString());
         js.addProperty("country", country.getText().toString());
-        js.addProperty("delivery_boy_pin", delivery_boy_pin.getText().toString());
+        js.addProperty("delivary_boy_pin", delivery_boy_pin.getText().toString());
         js.addProperty("business_logo", photoUrl);
         js.addProperty("pin", pin.getText().toString());
 
@@ -119,7 +119,7 @@ public class Setup2 extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                System.out.println("atag" + response.body());
+               // Log.d(TAG, "onResponse: " + response.body().toString());
 
                 JsonObject js = response.body();
                 if (js != null) {

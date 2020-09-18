@@ -46,7 +46,7 @@ public class Setup extends AppCompatActivity {
     private static final String TAG = "this";
     User_Service apiInterface;
     private static final int CAMERA_REQUEST = 1888;
-    EditText edfirstname,edlastname,edmobileno,edmailid,edmailcode,edpassword,edit_emailverification;
+    EditText edfirstname,edlastname,edmobileno,edmailid,edmailcode,edpassword,edit_emailverification,edit_confirm_password;
     String emailpattern="[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     /*private static final String PASSWORD_PATTERN =
@@ -78,7 +78,10 @@ public class Setup extends AppCompatActivity {
         edmailid = findViewById(R.id.edit_emailid);
         edmailcode = findViewById(R.id.edit_emailverification);
         edpassword = findViewById(R.id.edit_password);
+        edit_confirm_password = findViewById(R.id.edit_confirm_password);
         edit_emailverification.setVisibility(View.GONE);
+
+
 
         edmobileno.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
