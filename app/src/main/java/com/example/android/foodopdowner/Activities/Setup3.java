@@ -78,13 +78,15 @@ public class Setup3 extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         owner_id = bundle.getString("owner_id");
-        buisness_id = bundle.getString("buisness_id");
+        buisness_id = bundle.getString("business_id");
         buisnessname = bundle.getString("buisness_name");
         firstaddress = bundle.getString("address");
         phoneno = bundle.getString("phone_no");
+        //Bitmap bitmapimage = getIntent().getExtras().getParcelable("business_logo");
 //        byte[] byteArray = getIntent().getByteArrayExtra("image");
 //        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         edit_buisness_id.setText(buisness_id);
+
 
 
         next_btn.setOnClickListener(new View.OnClickListener() {
@@ -184,7 +186,7 @@ public class Setup3 extends AppCompatActivity {
                 {
                     Intent intent=new Intent(Setup3.this,Banksetup.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("buisness_id",buisness_id);
+                    bundle.putString("business_id",buisness_id);
                     bundle.putString("owner_id",owner_id);
                     bundle.putString("buisness_name",buisnessname);
                     bundle.putString("address",firstaddress);

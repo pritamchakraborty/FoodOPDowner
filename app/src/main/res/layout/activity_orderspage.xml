@@ -3,1490 +3,166 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/bgcolor"
     tools:context=".Activities.Orderspage">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_current_orders"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:padding="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </ScrollView>
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-            android:orientation="vertical">
+        <Button
+            android:id="@+id/track_delivery_boy"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="2dp"
+            android:background="@color/toolbg"
+            android:text="Track Delivery Boy"
+            android:textColor="@color/black" />
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@color/toolbg"
-                app:navigationIcon="@drawable/backarrow">
+        <Button
+            android:id="@+id/btn_delivery_boy"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="2dp"
+            android:background="@color/toolbg"
+            android:text="Delivery Boy"
+            android:textColor="@color/black" />
+    </LinearLayout>
 
-                <TextView
-                    android:layout_width="220dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="Foodopd Owner"
-                    android:textColor="@color/black"
-                    android:textSize="20dp" />
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-            </androidx.appcompat.widget.Toolbar>
+        <androidx.cardview.widget.CardView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:text="CURRENT ORDERS "
-                android:textColor="@color/black"
-                android:textSize="20dp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/grey">
-                    <Spinner
-                        android:id="@+id/sp_order"
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/details"
-                        android:background="@null"
-                        android:textSize="18dp" />
-
-                 <!--   <TextView
-                        android:id="@+id/ordernum1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:text="1234"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:id="@+id/customerone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="ABCD"
-                        android:textSize="18dp" />-->
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/ordertime1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Order Time"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:id="@+id/pickuptiime1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Pickup Time"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="18dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Pickup"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Delivery"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/lightyellow">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/Person"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/grey">
-                    <Spinner
-                        android:id="@+id/sp_order1"
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/details"
-                        android:background="@null"
-                        android:textSize="18dp" />
-
-                   <!-- <TextView
-                        android:id="@+id/ordernum2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:text="1234"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:id="@+id/customertwo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="ABCD"
-                        android:textSize="18dp" />-->
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/ordertime2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Order Time"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:id="@+id/pickuptiime2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Pickup Time"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="18dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Pickup"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Delivery"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/lightyellow">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/Person"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/grey">
-                    <Spinner
-                        android:id="@+id/sp_order2"
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/details"
-                        android:background="@null"
-                        android:textSize="18dp" />
-
-                  <!--  <TextView
-                        android:id="@+id/ordernum3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:text="1234"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:id="@+id/customerthree"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="ABCD"
-                        android:textSize="18dp" />-->
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/ordertime3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Order Time"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:id="@+id/pickuptiime3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Pickup Time"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="18dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Pickup"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Delivery"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/lightyellow">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/Person"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/grey">
-                    <Spinner
-                        android:id="@+id/sp_order4"
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/details"
-                        android:background="@null"
-                        android:textSize="18dp" />
-
-                   <!-- <TextView
-                        android:id="@+id/ordernum4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:text="1234"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:id="@+id/customerfour"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="ABCD"
-                        android:textSize="18dp" />-->
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/ordertime4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Order Time"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:id="@+id/pickuptiime4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Pickup Time"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="18dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Pickup"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Delivery"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/lightyellow">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/Person"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/grey">
-                    <Spinner
-                        android:id="@+id/sp_order5"
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/details"
-                        android:background="@null"
-                        android:textSize="18dp" />
-
-                  <!--  <TextView
-                        android:id="@+id/ordernum5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:text="1234"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:id="@+id/customerfive"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="ABCD"
-                        android:textSize="18dp" />-->
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/ordertime5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Order Time"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:id="@+id/pickuptiime5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Pickup Time"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="18dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Pickup"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Delivery"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/lightyellow">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/Person"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/grey">
-                    <Spinner
-                        android:id="@+id/sp_order6"
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/details"
-                        android:background="@null"
-                        android:textSize="18dp" />
-
-                 <!--   <TextView
-                        android:id="@+id/ordernum6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:text="1234"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:id="@+id/customersix"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="ABCD"
-                        android:textSize="18dp" />-->
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/ordertime6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Order Time"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:id="@+id/pickuptiime6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Pickup Time"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="18dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Pickup"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Delivery"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/lightyellow">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/Person"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/grey">
-                    <Spinner
-                        android:id="@+id/sp_order8"
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/details"
-                        android:background="@null"
-                        android:textSize="18dp" />
-
-                   <!-- <TextView
-                        android:id="@+id/ordernum7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:text="1234"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:id="@+id/customerseven"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="ABCD"
-                        android:textSize="18dp" />-->
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/ordertime7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Order Time"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:id="@+id/pickuptiime7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Pickup Time"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="18dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Pickup"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Delivery"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/lightyellow">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/Person"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/grey">
-                    <Spinner
-                        android:id="@+id/sp_order9"
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/details"
-                        android:background="@null"
-                        android:textSize="18dp" />
-
-                  <!--  <TextView
-                        android:id="@+id/ordernum8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:text="1234"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:id="@+id/customereight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="ABCD"
-                        android:textSize="18dp" />-->
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/ordertime8"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Order Time"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:id="@+id/pickuptiime8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Pickup Time"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="18dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Pickup"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Delivery"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/lightyellow">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/Person"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/grey">
-                    <Spinner
-                        android:id="@+id/sp_order10"
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/details"
-                        android:background="@null"
-                        android:textSize="18dp" />
-
-                    <!--<TextView
-                        android:id="@+id/ordernum9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:text="1234"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:id="@+id/customernine"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="ABCD"
-                        android:textSize="18dp" />-->
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/ordertime9"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Order Time"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:id="@+id/pickuptiime9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Pickup Time"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="18dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Pickup"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Delivery"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/lightyellow">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center_horizontal"
-                        android:entries="@array/Person"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_congestion_yellow">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:text="Discount"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:id="@+id/discount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="15%"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="202dp"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/lightbackgreen">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/mapboxGrayLight"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/totalsale"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Today Sale: $.... Time"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="33dp"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:id="@+id/currrenttime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                        android:text="Current Time"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/black" />
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="Admin"
-                    app:cardBackgroundColor="@color/mapbox_navigation_route_layer_blue">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                      android:gravity="center"
-                        android:text="ADMIN"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:id="@+id/dicount"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="40dp"
-                       android:gravity="center"
-                        android:text="PAGE"
-                        android:textSize="18dp" />
-                </androidx.cardview.widget.CardView>
-
-
-            </LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="2"
-
-    android:orientation="horizontal">
-            <Button
-                android:layout_width="200dp"
+                android:layout_marginTop="10dp"
+                android:text="Discount"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/discount"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="40dp"
+                android:text="15%"
+                android:textSize="18dp" />
+        </androidx.cardview.widget.CardView>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="@color/black" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="202dp"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/lightbackgreen">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/mapboxGrayLight"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/totalsale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Today Sale: $.... Time"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="33dp"
+                android:background="@color/black" />
+
+            <TextView
+                android:id="@+id/curenttime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="10dp"
+                android:text="Curent time"
+                android:textAlignment="center"
+                android:textColor="#0321C8"
+                android:textSize="25sp" />
+        </androidx.cardview.widget.CardView>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="@color/black" />
 
 
-                android:background="@color/toolbg"
-                android:onClick="Deliverytrack"
-                android:text="Track Delivery Boy"
-                android:textColor="@color/black"
-                android:layout_marginRight="2dp"
-            />
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="Admin"
+            app:cardBackgroundColor="@color/mapbox_navigation_route_layer_blue">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="ADMIN"
+                android:textSize="15dp" />
 
-    <Button
-        android:id="@+id/deliveryboy"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="2dp"
-        android:background="@color/toolbg"
-        android:text="Delivery Boy"
-        android:textColor="@color/black"
-
-       />
-  <!--  android:onClick="Deliveryboy"-->
-
-
-
-
-
-</LinearLayout>>
-        </LinearLayout>
-
-    </ScrollView>
-
+            <TextView
+                android:id="@+id/dicount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:text="PAGE"
+                android:textSize="15dp" />
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

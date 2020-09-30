@@ -73,9 +73,10 @@ public class Drinkmenu extends AppCompatActivity implements ImageChooser {
         recyclerView = findViewById(R.id.drinks_recyclerView);
         toolbar = findViewById(R.id.toolbar);
         data = drinkItems();
-        //Bundle bundle = getIntent().getExtras();
-        //owner_id = bundle.getString("owner_id");
-        //buisness_id = bundle.getString("business_id");
+
+//        Bundle bundle = getIntent().getExtras();
+//        owner_id = bundle.getString("owner_id");
+//        buisness_id = bundle.getString("business_id");
 
         //checking the permission
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this,
@@ -99,7 +100,6 @@ public class Drinkmenu extends AppCompatActivity implements ImageChooser {
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(dataAdaapter);
-        apiInterface = Api_Client.getClient().create(User_Service.class);
 
     }
 
@@ -222,8 +222,8 @@ public class Drinkmenu extends AppCompatActivity implements ImageChooser {
         JsonObject js = new JsonObject();
         js.addProperty("menu_type", "1");
         js.addProperty("drink", "1");
-        js.addProperty("business_id", "1567218728");
-        js.addProperty("owner_id", "33");
+        js.addProperty("business_id", buisness_id);
+        js.addProperty("owner_id", owner_id);
         js.addProperty("menu_name", et_name.getText().toString());
         js.addProperty("price", et_price.getText().toString());
         js.addProperty("pic", "");
@@ -231,7 +231,7 @@ public class Drinkmenu extends AppCompatActivity implements ImageChooser {
 
 
         apiInterface = Api_Client.getClient().create(User_Service.class);
-        Call<Food_Items> call = apiInterface.saveFoodMenu("1", "1", "1567218728", "33", et_name.getText().toString(), et_price.getText().toString(), "", "5");
+        Call<Food_Items> call = apiInterface.saveFoodMenu("1", "1", buisness_id, owner_id, et_name.getText().toString(), et_price.getText().toString(), "", "5");
 
         call.enqueue(new retrofit2.Callback<Food_Items>() {
 

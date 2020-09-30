@@ -67,14 +67,14 @@ public class Businesspage extends AppCompatActivity implements OnMapReadyCallbac
     // variables needed to initialize navigation
     private Button button;
     ImageView im_logo;
-    TextView tv_buisness_name,tv_address,tv_phone_no;
+    TextView tv_buisness_name, tv_address, tv_phone_no;
     Button delivery_button;
     private static final int CAMERA_REQUEST = 1888;
     LocationManager locationManager;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    String buisnessname ="";
-    String firstaddress ="";
-    String phoneno ="";
+    String buisnessname = "";
+    String firstaddress = "";
+    String phoneno = "";
     String owner_id = "";
     String buisness_id = "";
 
@@ -85,9 +85,9 @@ public class Businesspage extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_businesspage);
         mapView = findViewById(R.id.mapView);
         im_logo = (findViewById(R.id.image_view_logo));
-        tv_buisness_name =findViewById(R.id.tv_buisness_name);
-        tv_address =findViewById(R.id.tv_address);
-        tv_phone_no =findViewById(R.id.tv_phone_no);
+        tv_buisness_name = findViewById(R.id.tv_buisness_name);
+        tv_address = findViewById(R.id.tv_address);
+        tv_phone_no = findViewById(R.id.tv_phone_no);
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new
                     StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -104,19 +104,14 @@ public class Businesspage extends AppCompatActivity implements OnMapReadyCallbac
 
         }
 
-        Bundle bundle = getIntent().getExtras();
-        owner_id = bundle.getString("owner_id");
-        buisness_id = bundle.getString("business_id");
-        buisnessname = bundle.getString("buisness_name");
-        firstaddress = bundle.getString("address");
-        phoneno = bundle.getString("phone_no");
-        //byte[] byteArray = getIntent().getByteArrayExtra("image");
-        //Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+
+        owner_id = getIntent().getStringExtra("owner_id");
+        buisness_id = getIntent().getStringExtra("business_id");
 
         tv_buisness_name.setText(buisnessname);
         tv_address.setText(firstaddress);
         tv_phone_no.setText(phoneno);
-        //im_logo.setImageBitmap(bmp);
+        //im_logo.setImageBitmap(bitmapimage);
 
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -354,10 +349,10 @@ public class Businesspage extends AppCompatActivity implements OnMapReadyCallbac
     public void MenuItems(View view) {
 
         Intent intent = new Intent(Businesspage.this, FoodMenu.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("business_id",buisness_id);
-        bundle.putString("owner_id",owner_id);
-        intent.putExtras(bundle);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("business_id",buisness_id);
+//        bundle.putString("owner_id",owner_id);
+//        intent.putExtras(bundle);
         startActivity(intent);
     }
 
@@ -367,7 +362,11 @@ public class Businesspage extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void Currentorders(View view) {
-        startActivity(new Intent(getApplicationContext(), Orderspage.class));
+//        startActivity(new Intent(getApplicationContext(), Orderspage.class));
+        Intent intent = new Intent(Businesspage.this, Orderspage.class);
+        intent.putExtra("business_id", buisness_id);
+        intent.putExtra("owner_id", owner_id);
+        startActivity(intent);
     }
 
     public void Admin(View view) {

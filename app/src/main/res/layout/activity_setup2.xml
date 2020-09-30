@@ -166,6 +166,7 @@
                 android:layout_marginRight="20dp"
                 android:hint="Delivery boy Pin :4 digit"
                 android:textSize="18sp"
+                android:maxLength="4"
                 android:singleLine="true"
                 android:paddingLeft="10dp"
                 android:background="@drawable/rectangleedittext"/>

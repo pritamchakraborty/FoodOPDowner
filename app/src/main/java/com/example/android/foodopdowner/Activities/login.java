@@ -21,7 +21,12 @@ import com.example.android.foodopdowner.rest.User_Service;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,11 +39,14 @@ public class login extends AppCompatActivity {
     Handler handle;
     ProgressDialog progressDialog;
     Button btn_login;
+    private ArrayList<SignInResponse>signInResponses;
     Databasehelper db;
     String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     String PPASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
     User_Service apiinterface;
     List<SignInResponse> signInResponseList;
+    String business_id = "";
+    String owner_id = "";
 
 
     @Override
@@ -58,13 +66,7 @@ public class login extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //checkInternetConenction();
-                Intent intent=new Intent(login.this,Businesspage.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("business_id","1567218728");
-                bundle.putString("owner_id","33");
-                intent.putExtras(bundle);
-                startActivity(intent);
+                checkInternetConenction();
             }
         });
 
@@ -105,17 +107,18 @@ public class login extends AppCompatActivity {
             public void onResponse(Call<SignInResponse> call, Response<SignInResponse> response) {
 
                 if (response.isSuccessful()){
-                    for(int i =0 ; i<signInResponseList.size();i++)
+
+                    Toast.makeText(login.this, "Login Success", Toast.LENGTH_SHORT).show();
+                    SignInResponse signInResponse = response.body();
+                    if(!signInResponse.getData().isEmpty())
                     {
-                        Toast.makeText(login.this, "login success", Toast.LENGTH_SHORT).show();
-                        String buisness_id = response.body().getData().get(i).getBusinessId().toString();
-                        String owner_id = response.body().getData().get(i).getOwnerId().toString();
-                        Intent intent=new Intent(login.this,Businesspage.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("business_id",buisness_id);
-                        bundle.putString("owner_id",owner_id);
-                        intent.putExtras(bundle);
+                        business_id = signInResponse.getData().get(0).getBusinessId();
+                        owner_id = signInResponse.getData().get(0).getOwnerId();
+                        Intent intent = new Intent(login.this, Businesspage.class);
+                        intent.putExtra("business_id",business_id);
+                        intent.putExtra("owner_id",owner_id);
                         startActivity(intent);
+
                     }
 
                 }else {
@@ -134,8 +137,6 @@ public class login extends AppCompatActivity {
         });
 
     }
-
-
 
 
     public boolean checkInternetConenction() {

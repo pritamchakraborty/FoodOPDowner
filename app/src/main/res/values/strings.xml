@@ -17,10 +17,6 @@
         <item>REJECT</item>
 
     </array>
-    <array name="details">
-        <item>Order-Details</item>
-        <item>Print</item>
-    </array>
     <array name="category">
 
         <item>Italian</item>

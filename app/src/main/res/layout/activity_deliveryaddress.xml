@@ -583,22 +583,20 @@
                 android:layout_height="1dp"
                 android:background="@color/black" />
 
-
             <TextView
-                android:id="@+id/currrenttime"
+                android:id="@+id/curenttime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
+                android:textAlignment="center"
+                android:paddingLeft="10dp"
+                android:textColor="#0321C8"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="100dp"
+                android:text="Curent time"
                 android:layout_marginBottom="20dp"
-                android:background="@color/lightbackgreen"
-                android:paddingLeft="20dp"
-                android:paddingTop="10dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="10dp"
-                android:text="Current Time"
-                android:textSize="20dp" />
-
+                android:textSize="35sp"
+                android:gravity="center"
+                />
         </LinearLayout>
 
     </ScrollView>

@@ -72,7 +72,7 @@ public class Deliverystatus extends AppCompatActivity implements OnMapReadyCallb
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
-        txcurrenttime=findViewById(R.id.currrenttime);
+        txcurrenttime = findViewById(R.id.curenttime);
 
         final Handler someHandler = new Handler(getMainLooper());
         someHandler.postDelayed(new Runnable() {

@@ -34,10 +34,11 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         owner_id = bundle.getString("owner_id");
-        buisness_id = bundle.getString("buisness_id");
+        buisness_id = bundle.getString("business_id");
         buisnessname = bundle.getString("buisness_name");
         firstaddress = bundle.getString("address");
         phoneno = bundle.getString("phone_no");
+        //Bitmap bitmapimage = getIntent().getExtras().getParcelable("business_logo");
 //        byte[] byteArray = getIntent().getByteArrayExtra("image");
 //        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 

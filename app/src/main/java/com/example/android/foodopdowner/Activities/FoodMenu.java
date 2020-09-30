@@ -86,9 +86,10 @@ public class FoodMenu extends AppCompatActivity implements ImageChooser {
         });
 
         progressBar.setVisibility(View.GONE);
-        Bundle bundle = getIntent().getExtras();
-        owner_id = bundle.getString("owner_id");
-        buisness_id = bundle.getString("business_id");
+
+//        Bundle bundle = getIntent().getExtras();
+//        owner_id = bundle.getString("owner_id");
+//        buisness_id = bundle.getString("business_id");
 
         //checking the permission
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this,
@@ -123,8 +124,8 @@ public class FoodMenu extends AppCompatActivity implements ImageChooser {
         JsonObject js = new JsonObject();
         js.addProperty("menu_type", "0");
         js.addProperty("drink", "0");
-        js.addProperty("business_id", "1567218728");
-        js.addProperty("owner_id", "33");
+        js.addProperty("business_id", "1224965296");
+        js.addProperty("owner_id", "142");
         js.addProperty("menu_name", et_name.getText().toString());
         js.addProperty("price", et_price.getText().toString());
         js.addProperty("pic", "");
@@ -132,7 +133,7 @@ public class FoodMenu extends AppCompatActivity implements ImageChooser {
 
 
         apiInterface = Api_Client.getClient().create(User_Service.class);
-        Call<Food_Items> call = apiInterface.saveFoodMenu("0", "0", "1567218728", "33", et_name.getText().toString(), et_price.getText().toString(), "", "5");
+        Call<Food_Items> call = apiInterface.saveFoodMenu("0", "0", "1224965296", "142", et_name.getText().toString(), et_price.getText().toString(), "", "5");
 
         call.enqueue(new retrofit2.Callback<Food_Items>() {
 
@@ -165,13 +166,19 @@ public class FoodMenu extends AppCompatActivity implements ImageChooser {
     }
 
     public void Drinksmenu(View view) {
-        startActivity(new Intent(getApplicationContext(),Drinkmenu.class));
-    }
-
-    public void MenuDetails(View view){
-        Intent intent=new Intent(getApplicationContext(), FoodMenuItems.class);
+        //startActivity(new Intent(getApplicationContext(),Drinkmenu.class));
+        Intent intent = new Intent(FoodMenu.this, Drinkmenu.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("business_id",buisness_id);
+//        bundle.putString("owner_id",owner_id);
+//        intent.putExtras(bundle);
         startActivity(intent);
     }
+
+//    public void MenuDetails(View view){
+//        Intent intent=new Intent(getApplicationContext(), FoodMenuItems.class);
+//        startActivity(intent);
+//    }
     public void onBackPressed()
     {
       startActivity(new Intent(getApplicationContext(),Businesspage.class));

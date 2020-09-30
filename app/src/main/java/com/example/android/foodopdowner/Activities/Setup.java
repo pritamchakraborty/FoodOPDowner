@@ -264,7 +264,7 @@ public class Setup extends AppCompatActivity {
                     String owner_id = response.body().getData().getOwnerId().toString();
                     Intent intent=new Intent(Setup.this,Setup2.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("buisness_id",buisness_id);
+                    bundle.putString("business_id",buisness_id);
                     bundle.putString("owner_id",owner_id);
                     intent.putExtras(bundle);
                     startActivity(intent);

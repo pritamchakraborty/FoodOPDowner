@@ -1,12 +1,14 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#ccff66</item>
-        <item name="colorPrimaryDark">#ccff66</item>
+        <item name="colorPrimaryDark">#000000</item>
         <item name="colorAccent">#ccff66</item>
         <item name="titleTextColor">@color/black</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">#000000</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">#ccff66</item>
     </style>
 
     <!-- Alert Dialog -->

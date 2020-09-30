@@ -1,91 +1,145 @@
 package com.example.android.foodopdowner.Activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.FileUtils;
+import android.os.Handler;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.android.foodopdowner.Adapters.CurrentOrdersAdapter;
+import com.example.android.foodopdowner.Adapters.Drinks_DataAdapter;
 import com.example.android.foodopdowner.R;
+import com.example.android.foodopdowner.model.CurrentOrdersModel;
+import com.example.android.foodopdowner.model.FoodItem;
+import com.example.android.foodopdowner.model.Food_Items;
+import com.example.android.foodopdowner.rest.Api_Client;
+import com.example.android.foodopdowner.rest.User_Service;
+import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
+import com.google.gson.JsonObject;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
-public class Orderspage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-TextView txcurrenttime;
-Button deliveryboy;
-    SimpleDateFormat simpleDateFormat;
-    String time;
-    Calendar calander;
+import retrofit2.Call;
+import retrofit2.Response;
+
+public class Orderspage extends AppCompatActivity {
+    private static final String TAG = "this";
+    TextView txcurrenttime;
+    Button deliveryboy;
     Toolbar toolbar;
-    Spinner orderDetails;
-  //  String[] order_names={"Order_Details","Print"};
+    CardView view_order;
+    List<CurrentOrdersModel>currentOrdersModels = new ArrayList<>();
+    LinearLayoutManager mLayoutManager;
+    RecyclerView rv_current_orders;
+    CurrentOrdersAdapter currentOrdersAdapter;
+    User_Service apiInterface;
+    String buisness_id = "";
+    String owner_id = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orderspage);
-        //--
-        orderDetails=findViewById(R.id.sp_order);
-       /* orderDetails.setOnItemSelectedListener(this);
-        ArrayAdapter aa=new ArrayAdapter(this,android.R.layout.simple_spinner_item,order_names);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        orderDetails.setAdapter(aa);*/
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.details, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-        orderDetails.setAdapter(adapter);
-        //--
-        txcurrenttime=findViewById(R.id.currrenttime);
-        deliveryboy=findViewById(R.id.deliveryboy);
-        deliveryboy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               Intent intent=new Intent(Orderspage.this,Deliveryboy.class);
-               startActivity(intent);
-            }
-        });
+        view_order = findViewById(R.id.view_order);
+        txcurrenttime = findViewById(R.id.curenttime);
+        deliveryboy = findViewById(R.id.btn_delivery_boy);
+        rv_current_orders = findViewById(R.id.rv_current_orders);
 
-        calander = Calendar.getInstance();
-        simpleDateFormat = new SimpleDateFormat("kk:mm:ss a");
-
-        time = simpleDateFormat.format(calander.getTime());
-        txcurrenttime.setText(time);
-        toolbar=findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        final Handler someHandler = new Handler(getMainLooper());
+        someHandler.postDelayed(new Runnable() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),Businesspage.class));
+            public void run() {
+                txcurrenttime.setText(new SimpleDateFormat("HH:mm:ss", Locale.US).format(new Date()));
+                someHandler.postDelayed(this, 1000);
             }
-        });
+        }, 10);
+
+
+        owner_id = getIntent().getStringExtra("owner_id");
+        buisness_id = getIntent().getStringExtra("business_id");
+
+        rv_current_orders = (RecyclerView) findViewById(R.id.rv_current_orders);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        rv_current_orders.setLayoutManager(layoutManager);
+        currentOrdersAdapter = new CurrentOrdersAdapter(getApplicationContext(), currentOrdersModels);
+        rv_current_orders.setAdapter(currentOrdersAdapter);
+
+        getOrders();
+
     }
 
+    private void getOrders() {
+        JsonObject js = new JsonObject();
+        js.addProperty("business_id", buisness_id);
+        js.addProperty("owner_id", owner_id);
+
+        apiInterface = Api_Client.getClient().create(User_Service.class);
+        Call<CurrentOrdersModel> call = apiInterface.currentOrder(buisness_id, owner_id);
+
+        call.enqueue(new retrofit2.Callback<CurrentOrdersModel>() {
+
+            @Override
+            public void onResponse(Call<CurrentOrdersModel> call, Response<CurrentOrdersModel> response) {
+                if (response.isSuccessful()) {
+                    CurrentOrdersModel currentOrdersModel = response.body();
+                    Log.d(TAG, "onResponse: " + currentOrdersModel.toString());
+                    if(currentOrdersModel.getStatus().equals("success"))
+                    {
+                        Toast.makeText(Orderspage.this, "Order updated", Toast.LENGTH_SHORT).show();
+                        //currentOrdersModels.addAll(response.body().getData());
+                    }
+
+            }
+
+        }
+
+        @Override
+        public void onFailure (Call <CurrentOrdersModel> call, Throwable t){
+            Toast.makeText(Orderspage.this, "Request Failed" + t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+
+        }
+    });
+}
+
+
     public void Admin(View view) {
-        startActivity(new Intent(getApplicationContext(),Admin.class));
+        startActivity(new Intent(getApplicationContext(), Admin.class));
     }
 
     public void Deliverytrack(View view) {
-        startActivity(new Intent(getApplicationContext(),Deliverytrack.class));
+        startActivity(new Intent(getApplicationContext(), Deliverytrack.class));
 
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        //Toast.makeText(getApplicationContext(), order_names[position], Toast.LENGTH_LONG).show();
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        Spinner orderDetails = (Spinner) findViewById(R.id.sp_order);
-        orderDetails.setOnItemSelectedListener(this);
-
-    }
 }

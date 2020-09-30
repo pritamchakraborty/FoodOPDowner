@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,6 +15,8 @@ import com.example.android.foodopdowner.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class Deliveryaddress extends AppCompatActivity {
     TextView txcurrenttime;
@@ -27,10 +30,19 @@ public class Deliveryaddress extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deliveryaddress);
 
-        txcurrenttime=findViewById(R.id.currrenttime);
+        txcurrenttime=findViewById(R.id.curenttime);
 
-        calander = Calendar.getInstance();
-        simpleDateFormat = new SimpleDateFormat("kk:mm:ss");
+        //for getting system real time
+        final Handler someHandler = new Handler(getMainLooper());
+        someHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                txcurrenttime.setText(new SimpleDateFormat("HH:mm:ss", Locale.US).format(new Date()));
+                someHandler.postDelayed(this, 1000);
+            }
+        }, 10);
+
+
 
         time = simpleDateFormat.format(calander.getTime());
         txcurrenttime.setText(time);

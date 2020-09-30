@@ -10,6 +10,7 @@ import retrofit2.Response;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +41,9 @@ import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconAllowOverlap;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconIgnorePlacement;
@@ -74,8 +77,14 @@ public class Deliverytrack extends AppCompatActivity implements OnMapReadyCallba
 
         txcurrenttime=findViewById(R.id.currrenttime);
 
-        calander = Calendar.getInstance();
-        simpleDateFormat = new SimpleDateFormat("kk:mm:ss ");
+        final Handler someHandler = new Handler(getMainLooper());
+        someHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                txcurrenttime.setText(new SimpleDateFormat("HH:mm:ss", Locale.US).format(new Date()));
+                someHandler.postDelayed(this, 1000);
+            }
+        }, 10);
 
         time = simpleDateFormat.format(calander.getTime());
         txcurrenttime.setText(time);

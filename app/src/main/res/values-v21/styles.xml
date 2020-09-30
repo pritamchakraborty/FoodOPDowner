@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#ccff66</item>
+        <item name="colorPrimaryDark">#000000</item>
+        <item name="colorAccent">#ccff66</item>
+        <item name="titleTextColor">@color/black</item>
+        <item name="android:statusBarColor">#000000</item>
+        <item name="android:navigationBarColor">#ccff66</item>
+    </style>
+</resources>
