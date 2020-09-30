@@ -92,8 +92,6 @@ public class Orderspage extends AppCompatActivity {
         rv_current_orders = (RecyclerView) findViewById(R.id.rv_current_orders);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         rv_current_orders.setLayoutManager(layoutManager);
-        currentOrdersAdapter = new CurrentOrdersAdapter(getApplicationContext(), currentOrdersModels);
-        rv_current_orders.setAdapter(currentOrdersAdapter);
 
         getOrders();
 
@@ -111,18 +109,12 @@ public class Orderspage extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<CurrentOrdersModel> call, Response<CurrentOrdersModel> response) {
-                if (response.isSuccessful()) {
                     CurrentOrdersModel currentOrdersModel = response.body();
-                    Log.d(TAG, "onResponse: " + currentOrdersModel.toString());
-                    if(currentOrdersModel.getStatus().equals("success"))
-                    {
-                        Toast.makeText(Orderspage.this, "Order updated", Toast.LENGTH_SHORT).show();
-                        //currentOrdersModels.addAll(response.body().getData());
-                    }
+                    Toast.makeText(Orderspage.this, "Order updated", Toast.LENGTH_SHORT).show();
+                    currentOrdersAdapter = new CurrentOrdersAdapter(getApplicationContext(), currentOrdersModels);
+                    rv_current_orders.setAdapter(currentOrdersAdapter);
 
             }
-
-        }
 
         @Override
         public void onFailure (Call <CurrentOrdersModel> call, Throwable t){
