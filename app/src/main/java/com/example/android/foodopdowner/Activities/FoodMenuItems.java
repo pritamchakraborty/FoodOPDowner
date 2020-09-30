@@ -18,7 +18,7 @@ import com.example.android.foodopdowner.R;
 
 import java.io.File;
 
-public class MenuDetails extends AppCompatActivity {
+public class FoodMenuItems extends AppCompatActivity {
     Toolbar toolbar;
     ImageView imageView;
     //
@@ -39,6 +39,10 @@ public class MenuDetails extends AppCompatActivity {
 
     EditText item_name,item_price;
     private static final String IMAGE_DIRECTORY = "/demonuts";
+
+    String owner_id ="";
+    String buisness_id ="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +55,12 @@ public class MenuDetails extends AppCompatActivity {
         //  item_price=findViewById(R.id.edit_price);
         // back=findViewById(R.id.back);
 
+        Bundle bundle = getIntent().getExtras();
+
+        owner_id = bundle.getString("owner_id");
+        buisness_id = bundle.getString("buisness_id");
+
+
         if(getIntent().hasExtra("byteArray")) {
             Bitmap _bitmap = BitmapFactory.decodeByteArray(
                     getIntent().getByteArrayExtra("byteArray"),0,getIntent().getByteArrayExtra("byteArray").length);
@@ -62,7 +72,7 @@ public class MenuDetails extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),Menuitems.class));
+                startActivity(new Intent(getApplicationContext(), FoodMenu.class));
 
 
             }
@@ -72,7 +82,7 @@ public class MenuDetails extends AppCompatActivity {
 
 
     public void MenuItems(View view) {
-        startActivity(new Intent(getApplicationContext(),Menuitems.class));
+        startActivity(new Intent(getApplicationContext(), FoodMenu.class));
     }
 
     public void backtomenu(View view) {

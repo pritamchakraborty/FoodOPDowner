@@ -6,6 +6,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -17,6 +19,11 @@ public class Banksetup extends AppCompatActivity {
 EditText edbankname,edaccountno,edroutingno,edcity;
     Toolbar toolbar;
     TextView tv_pay;
+    String buisnessname ="";
+    String firstaddress ="";
+    String phoneno ="";
+    String owner_id = "";
+    String buisness_id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,26 +42,37 @@ EditText edbankname,edaccountno,edroutingno,edcity;
             }
         });
 
+        Bundle bundle = getIntent().getExtras();
+        owner_id = bundle.getString("owner_id");
+        buisness_id = bundle.getString("buisness_id");
+        buisnessname = bundle.getString("buisness_name");
+        firstaddress = bundle.getString("address");
+        phoneno = bundle.getString("phone_no");
+//        byte[] byteArray = getIntent().getByteArrayExtra("image");
+//        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+
         tv_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(Banksetup.this);
-                builder1.setMessage("Thank you for your payment");
-                builder1.setCancelable(true);
-
-                builder1.setPositiveButton(
-                        "Ok",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-                startActivity(new Intent(getApplicationContext(),Businesspage.class));
+                Intent intent=new Intent(Banksetup.this,SplashScreenActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("buisness_id",buisness_id);
+                bundle.putString("owner_id",owner_id);
+                bundle.putString("buisness_name",buisnessname);
+                bundle.putString("address",firstaddress);
+                bundle.putString("phone_no",phoneno);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
+
     public void Payment(View view)
     {
         startActivity(new Intent(getApplicationContext(),Drinkmenu.class));

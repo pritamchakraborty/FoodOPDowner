@@ -10,14 +10,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.android.foodopdowner.Helper.Databasehelper;
 import com.example.android.foodopdowner.R;
+import com.example.android.foodopdowner.model.SignInResponse;
 import com.example.android.foodopdowner.rest.Api_Client;
 import com.example.android.foodopdowner.rest.User_Service;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,10 +33,12 @@ public class login extends AppCompatActivity {
     ConnectivityManager connectivityManager;
     Handler handle;
     ProgressDialog progressDialog;
+    Button btn_login;
     Databasehelper db;
     String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     String PPASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
     User_Service apiinterface;
+    List<SignInResponse> signInResponseList;
 
 
     @Override
@@ -41,11 +48,28 @@ public class login extends AppCompatActivity {
                 | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         setContentView(R.layout.activity_login);
+        signInResponseList = new ArrayList<>();
 
         db = new Databasehelper(this);
         owneremail = findViewById(R.id.edit_mail);
+        btn_login = findViewById(R.id.nextbutton);
         ownerpassword = findViewById(R.id.edit_pass);
+
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //checkInternetConenction();
+                Intent intent=new Intent(login.this,Businesspage.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("business_id","1567218728");
+                bundle.putString("owner_id","33");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
     }
+
 
     public void Signin(View view) {
         String emailid = owneremail.getText().toString().trim();
@@ -70,30 +94,38 @@ public class login extends AppCompatActivity {
     }
 
     public void callLogin() {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("ownemail", owneremail.getText().toString());
-        jsonObject.addProperty("ownpassword", ownerpassword.getText().toString());
-        apiinterface = Api_Client.getClient().create(User_Service.class);
-        Call<JsonObject> call = apiinterface.ownerlogin(owneremail.getText().toString(), ownerpassword.getText().toString());
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                JsonObject js=response.body();
-                if (js!=null){
 
-                    if (js.get("status").getAsString().equalsIgnoreCase("success")){
-                        Toast.makeText(login.this,"Login Success",Toast.LENGTH_SHORT).show();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("email", owneremail.getText().toString());
+        jsonObject.addProperty("password", ownerpassword.getText().toString());
+        apiinterface = Api_Client.getClient().create(User_Service.class);
+        Call<SignInResponse> call = apiinterface.ownerlogin(owneremail.getText().toString(), ownerpassword.getText().toString());
+        call.enqueue(new Callback<SignInResponse>() {
+            @Override
+            public void onResponse(Call<SignInResponse> call, Response<SignInResponse> response) {
+
+                if (response.isSuccessful()){
+                    for(int i =0 ; i<signInResponseList.size();i++)
+                    {
+                        Toast.makeText(login.this, "login success", Toast.LENGTH_SHORT).show();
+                        String buisness_id = response.body().getData().get(i).getBusinessId().toString();
+                        String owner_id = response.body().getData().get(i).getOwnerId().toString();
                         Intent intent=new Intent(login.this,Businesspage.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("business_id",buisness_id);
+                        bundle.putString("owner_id",owner_id);
+                        intent.putExtras(bundle);
                         startActivity(intent);
-                    }else {
-                        Toast.makeText(login.this,"Login Failed",Toast.LENGTH_SHORT).show();
                     }
+
+                }else {
+                    Toast.makeText(login.this,"Login Failed",Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
+            public void onFailure(Call<SignInResponse> call, Throwable t) {
 
                 Toast.makeText(login.this, "An Error Occured", Toast.LENGTH_SHORT).show();
 

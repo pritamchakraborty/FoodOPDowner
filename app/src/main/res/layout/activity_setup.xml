@@ -159,7 +159,6 @@
                 android:paddingLeft="10dp"
                 android:background="@drawable/rectangleedittext"/>
 
-
             <EditText
                 android:id="@+id/edit_password"
                 android:layout_width="match_parent"
@@ -172,6 +171,7 @@
                 android:singleLine="true"
                 android:inputType="textPassword"
                 android:paddingLeft="10dp"
+                android:password="true"
                 android:background="@drawable/rectangleedittext"/>
 
             <EditText
@@ -183,6 +183,7 @@
                 android:layout_marginRight="20dp"
                 android:hint="Confirm Password"
                 android:textSize="18sp"
+                android:password="true"
                 android:inputType="textPassword"
                 android:singleLine="true"
                 android:paddingLeft="10dp"

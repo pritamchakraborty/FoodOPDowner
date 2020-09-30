@@ -7,7 +7,6 @@ import androidx.cardview.widget.CardView;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -133,7 +132,7 @@ public class Admin extends AppCompatActivity {
     }
 
     public void menuSales(View view) {
-        startActivity(new Intent(getApplicationContext(), Menuitems.class));
+        startActivity(new Intent(getApplicationContext(), FoodMenu.class));
 
     }
 

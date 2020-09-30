@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
@@ -21,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.foodopdowner.R;
@@ -51,12 +53,13 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconAllowOverlap
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconIgnorePlacement;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 
-public class Businesspage extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener   {
+public class Businesspage extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener {
     private MapView mapView;
     private MapboxMap mapboxMap;
     // variables for adding location layer
     private PermissionsManager permissionsManager;
     private LocationComponent locationComponent;
+    String provider;
     // variables for calculating and drawing a route
     private DirectionsRoute currentRoute;
     private static final String TAG = "DirectionsActivity";
@@ -64,8 +67,16 @@ public class Businesspage extends AppCompatActivity implements OnMapReadyCallbac
     // variables needed to initialize navigation
     private Button button;
     ImageView im_logo;
+    TextView tv_buisness_name,tv_address,tv_phone_no;
     Button delivery_button;
     private static final int CAMERA_REQUEST = 1888;
+    LocationManager locationManager;
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    String buisnessname ="";
+    String firstaddress ="";
+    String phoneno ="";
+    String owner_id = "";
+    String buisness_id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +85,15 @@ public class Businesspage extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_businesspage);
         mapView = findViewById(R.id.mapView);
         im_logo = (findViewById(R.id.image_view_logo));
+        tv_buisness_name =findViewById(R.id.tv_buisness_name);
+        tv_address =findViewById(R.id.tv_address);
+        tv_phone_no =findViewById(R.id.tv_phone_no);
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new
                     StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-                if (checkPermission()) {
+        if (checkPermission()) {
             //main logic or main code
 
             // . write your main code to execute, It will execute if the permission is already given.
@@ -88,9 +102,21 @@ public class Businesspage extends AppCompatActivity implements OnMapReadyCallbac
             requestPermission();
 
 
+        }
 
-    }
+        Bundle bundle = getIntent().getExtras();
+        owner_id = bundle.getString("owner_id");
+        buisness_id = bundle.getString("business_id");
+        buisnessname = bundle.getString("buisness_name");
+        firstaddress = bundle.getString("address");
+        phoneno = bundle.getString("phone_no");
+        //byte[] byteArray = getIntent().getByteArrayExtra("image");
+        //Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 
+        tv_buisness_name.setText(buisnessname);
+        tv_address.setText(firstaddress);
+        tv_phone_no.setText(phoneno);
+        //im_logo.setImageBitmap(bmp);
 
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -105,7 +131,7 @@ public class Businesspage extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-        private boolean checkPermission() {
+    private boolean checkPermission() {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -129,13 +155,10 @@ public class Businesspage extends AppCompatActivity implements OnMapReadyCallbac
             try {
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
                 im_logo.setImageBitmap(photo);
-            }
-            catch (NullPointerException e)
-            {
+            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
             Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
         }
     }
@@ -158,19 +181,19 @@ public class Businesspage extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public boolean onMapClick(@NonNull LatLng point) {
 
-        try{
-        Point destinationPoint = Point.fromLngLat(point.getLongitude(), point.getLatitude());
-        Point originPoint = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(),
-                locationComponent.getLastKnownLocation().getLatitude());
+        try {
+            Point destinationPoint = Point.fromLngLat(point.getLongitude(), point.getLatitude());
+            Point originPoint = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(),
+                    locationComponent.getLastKnownLocation().getLatitude());
 
-        GeoJsonSource source = mapboxMap.getStyle().getSourceAs("destination-source-id");
-        if (source != null) {
-            source.setGeoJson(Feature.fromGeometry(destinationPoint));
-        }
+            GeoJsonSource source = mapboxMap.getStyle().getSourceAs("destination-source-id");
+            if (source != null) {
+                source.setGeoJson(Feature.fromGeometry(destinationPoint));
+            }
 
-        getRoute(originPoint, destinationPoint);
-        button.setEnabled(true);
-        button.setBackgroundResource(R.color.lightgreen);
+            getRoute(originPoint, destinationPoint);
+            button.setEnabled(true);
+            button.setBackgroundResource(R.color.lightgreen);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -203,7 +226,7 @@ public class Businesspage extends AppCompatActivity implements OnMapReadyCallbac
                         if (navigationMapRoute != null) {
                             navigationMapRoute.removeRoute();
                         } else {
-                            navigationMapRoute = new NavigationMapRoute(null,mapView,mapboxMap,R.style.NavigationMapRoute);
+                            navigationMapRoute = new NavigationMapRoute(null, mapView, mapboxMap, R.style.NavigationMapRoute);
                         }
                         navigationMapRoute.addRoute(currentRoute);
 
@@ -258,8 +281,6 @@ public class Businesspage extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-
-
     @Override
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
 
@@ -278,15 +299,14 @@ public class Businesspage extends AppCompatActivity implements OnMapReadyCallbac
                     @Override
                     public void onClick(View v) {
                         try {
-                        boolean simulateRoute = true;
-                        NavigationLauncherOptions options = NavigationLauncherOptions.builder()
-                                .directionsRoute(currentRoute)
-                                .shouldSimulateRoute(simulateRoute)
-                                .build();
+                            boolean simulateRoute = true;
+                            NavigationLauncherOptions options = NavigationLauncherOptions.builder()
+                                    .directionsRoute(currentRoute)
+                                    .shouldSimulateRoute(simulateRoute)
+                                    .build();
 // Call this method with Context from within an Activity
-                        NavigationLauncher.startNavigation(Businesspage.this, options);
-                        }catch (NullPointerException e)
-                        {
+                            NavigationLauncher.startNavigation(Businesspage.this, options);
+                        } catch (NullPointerException e) {
                             e.printStackTrace();
                         }
                     }
@@ -332,23 +352,31 @@ public class Businesspage extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void MenuItems(View view) {
-        startActivity(new Intent(getApplicationContext(),Menuitems.class));
+
+        Intent intent = new Intent(Businesspage.this, FoodMenu.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("business_id",buisness_id);
+        bundle.putString("owner_id",owner_id);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     public void Deliveryboy(View view) {
-        startActivity(new Intent(getApplicationContext(),Deliveryboy.class));
+        startActivity(new Intent(getApplicationContext(), Deliveryboy.class));
 
     }
 
     public void Currentorders(View view) {
-        startActivity(new Intent(getApplicationContext(),Orderspage.class));
-    }
-    public void Admin(View view) {
-        startActivity(new Intent(getApplicationContext(),Admin.class));
+        startActivity(new Intent(getApplicationContext(), Orderspage.class));
     }
 
-    public void onBackPressed()
-    {
+    public void Admin(View view) {
+        startActivity(new Intent(getApplicationContext(), Admin.class));
+    }
+
+    public void onBackPressed() {
         moveTaskToBack(true);
     }
+
+
 }

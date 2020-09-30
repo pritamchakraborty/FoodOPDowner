@@ -65,6 +65,7 @@
                     android:textSize="18dp"/>
 
                 <TextView
+                    android:id="@+id/tv_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Street no.4,George Street,New Jersey"
@@ -89,6 +90,7 @@
                     android:textSize="18dp"/>
 
                 <TextView
+                    android:id="@+id/tv_phone_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="+111111111111"
@@ -112,14 +114,15 @@
                     android:textColor="@color/black"
                     android:textSize="18dp"/>
 
-                <TextView
+                <RatingBar
+                    android:id="@+id/rating_bar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5.0"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="5dp"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"/>
+                    android:scaleY="0.5"
+                    android:scaleX="0.5"
+                    android:numStars="5"
+                    android:layout_marginLeft="-45dp"
+                    android:layout_marginTop="-5dp"/>
             </LinearLayout>
 
             <com.mapbox.mapboxsdk.maps.MapView

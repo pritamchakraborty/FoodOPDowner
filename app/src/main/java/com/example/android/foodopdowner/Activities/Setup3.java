@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -39,7 +41,10 @@ public class Setup3 extends AppCompatActivity {
     String buisness_id = "";
     String franchise_yes = "";
     String transaction_fee = "10";
-
+    String buisnessname ="";
+    String firstaddress ="";
+    String phoneno ="";
+    byte[]imagearr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +79,11 @@ public class Setup3 extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         owner_id = bundle.getString("owner_id");
         buisness_id = bundle.getString("buisness_id");
+        buisnessname = bundle.getString("buisness_name");
+        firstaddress = bundle.getString("address");
+        phoneno = bundle.getString("phone_no");
+//        byte[] byteArray = getIntent().getByteArrayExtra("image");
+//        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         edit_buisness_id.setText(buisness_id);
 
 
@@ -172,10 +182,15 @@ public class Setup3 extends AppCompatActivity {
 
                 if(response.isSuccessful())
                 {
+                    Intent intent=new Intent(Setup3.this,Banksetup.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("buisness_id",buisness_id);
                     bundle.putString("owner_id",owner_id);
-                    Intent intent=new Intent(Setup3.this,Banksetup.class);
+                    bundle.putString("buisness_name",buisnessname);
+                    bundle.putString("address",firstaddress);
+                    bundle.putString("phone_no",phoneno);
+                    intent.putExtras(bundle);
+                    //intent.putExtra("image", imagearr);
                     startActivity(intent);
                 }
 

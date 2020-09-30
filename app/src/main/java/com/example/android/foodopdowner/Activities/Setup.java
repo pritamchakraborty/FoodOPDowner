@@ -2,6 +2,7 @@ package com.example.android.foodopdowner.Activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.TooltipCompat;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -15,10 +16,15 @@ import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.text.Html;
+import android.text.InputType;
+import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -41,6 +47,8 @@ import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.lang.annotation.Target;
 
 public class Setup extends AppCompatActivity {
     private static final String TAG = "this";
@@ -82,7 +90,6 @@ public class Setup extends AppCompatActivity {
         edit_emailverification.setVisibility(View.GONE);
 
 
-
         edmobileno.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
@@ -97,6 +104,7 @@ public class Setup extends AppCompatActivity {
             }
         });
     }
+
 
     private void sendEmail() {
         progressBar.setVisibility(View.VISIBLE);
@@ -170,8 +178,12 @@ public class Setup extends AppCompatActivity {
             } else if (!edpassword.getText().toString().trim().matches(PPASSWORD_PATTERN)) {
                 // Toast.makeText(getApplicationContext(),"Invalid password ",Toast.LENGTH_SHORT).show();
                 edpassword.setError("Invalid Password");
-
-            } else {
+            }
+            else if (!edit_confirm_password.getText().toString().trim().matches(edpassword.getText().toString())) {
+                // Toast.makeText(getApplicationContext(),"Invalid password ",Toast.LENGTH_SHORT).show();
+                edit_confirm_password.setError("Password do not match");
+            }
+            else {
                 checkInternetConenction();
             }
         } catch (NullPointerException e) {

@@ -1,20 +1,47 @@
 package com.example.android.foodopdowner.Activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.android.foodopdowner.Adapters.DataAdapter;
 import com.example.android.foodopdowner.Adapters.Drinks_DataAdapter;
+import com.example.android.foodopdowner.Helper.ImageChooser;
 import com.example.android.foodopdowner.R;
-import com.example.android.foodopdowner.model.Drinks_Item;
+import com.example.android.foodopdowner.model.DrinkItem;
+import com.example.android.foodopdowner.model.FoodItem;
+import com.example.android.foodopdowner.model.Food_Items;
 import com.example.android.foodopdowner.rest.Api_Client;
 import com.example.android.foodopdowner.rest.User_Service;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.JsonObject;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.ArrayList;
 
@@ -22,14 +49,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Drinkmenu extends AppCompatActivity {
-   // ImageView imageitem1,imageitem2,imageitem3,imageitem4,imageitem5,imageitem6,imageitem7,imageitem8,imageitem9,imageitem10,imageitem11,imageitem12,imageitem13,imageitem14,imageitem15;
+public class Drinkmenu extends AppCompatActivity implements ImageChooser {
     Toolbar toolbar;
-    User_Service userService;
-    private ArrayList <Drinks_Item>data;
+    User_Service apiInterface;
     RecyclerView recyclerView;
     GridLayoutManager mLayoutManager;
     Drinks_DataAdapter dataAdaapter;
+    private ArrayList<DrinkItem> data;
+    EditText et_name, et_price;
+    ImageView imageitem1;
+    String owner_id = "";
+    String buisness_id = "";
+    byte[] imagearr;
+    private Uri mCropImageUri;
+    ProgressBar progressBar;
+    Uri imageUrl;
 
 
     @Override
@@ -37,383 +71,190 @@ public class Drinkmenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drinkmenu);
         recyclerView = findViewById(R.id.drinks_recyclerView);
+        toolbar = findViewById(R.id.toolbar);
+        data = drinkItems();
+        //Bundle bundle = getIntent().getExtras();
+        //owner_id = bundle.getString("owner_id");
+        //buisness_id = bundle.getString("business_id");
 
-       /* imageitem1=findViewById(R.id.item1);
-        imageitem2=findViewById(R.id.item2);
-        imageitem3=findViewById(R.id.item3);
-        imageitem4=findViewById(R.id.item4);
-        imageitem5=findViewById(R.id.item5);
-        imageitem6=findViewById(R.id.item6);
-        imageitem7=findViewById(R.id.item7);
-        imageitem8=findViewById(R.id.item8);
-        imageitem9=findViewById(R.id.item9);
-        imageitem10=findViewById(R.id.item10);
-        imageitem11=findViewById(R.id.item11);
-        imageitem12=findViewById(R.id.item12);
-        imageitem13=findViewById(R.id.item13);
-        imageitem14=findViewById(R.id.item14);
-        imageitem15=findViewById(R.id.item15);
-        if (checkPermission()) {
+        //checking the permission
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.parse("package:" + getPackageName()));
+            finish();
+            startActivity(intent);
+            return;
+        }
 
-        } else {
-            requestPermission();
-        }*/
-        toolbar=findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),Businesspage.class));
+                startActivity(new Intent(getApplicationContext(), Businesspage.class));
             }
         });
-        mLayoutManager = new GridLayoutManager(Drinkmenu.this,2);
+        dataAdaapter = new Drinks_DataAdapter(Drinkmenu.this, data, this);
+        mLayoutManager = new GridLayoutManager(Drinkmenu.this, 2);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(mLayoutManager);
-        userService = Api_Client.getClient().create(User_Service.class);
-        Call<Drinks_Item>call=userService.drinksList("show_items_drinks");
-        call.enqueue(new Callback<Drinks_Item>() {
-            @Override
-            public void onResponse(Call<Drinks_Item> call, Response<Drinks_Item> response) {
-                Drinks_Item userlist=response.body();
-                String status=userlist.status;
-                ArrayList<Drinks_Item.DDatum>ddatumList=userlist.data;
-                dataAdaapter=new Drinks_DataAdapter(Drinkmenu.this,ddatumList);
-                recyclerView.setAdapter(dataAdaapter);
+        recyclerView.setAdapter(dataAdaapter);
+        apiInterface = Api_Client.getClient().create(User_Service.class);
 
-
-
-            }
-
-            @Override
-            public void onFailure(Call<Drinks_Item> call, Throwable t) {
-
-            }
-        });
-
-
-
-    }
-
-
-
-
-
-  /*  private boolean checkPermission() {
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted
-            return false;
-        }
-        return true;
-    }
-
-    private void requestPermission() {
-
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.CAMERA},
-                0);
-    }
-
-
-
-
-    public void uploaditemone(View view) {
-
-        Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent1, 0);
-    }
-
-
-    public void uploaditemtwo(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 1);
-    }
-    public void uploaditemthree(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 2);
-    }
-    public void uploaditemfour(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 3);
-    }
-    public void uploaditemfive(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 4);
-    }
-    public void uploaditemsix(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 5);
-    }
-    public void uploaditemseven(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 6);
-    }
-    public void uploaditemeight(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 7);
-    }
-    public void uploaditemnine(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 8);
-    }
-    public void uploaditemten(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 9);
-    }
-    public void uploaditemeleven(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 10);
-    }
-    public void uploaditemtwele(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 11);
-    }
-    public void uploaditemthirteen(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 12);
-    }
-    public void uploaditemfourteen(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 13);
-    }
-    public void uploaditemfifteen(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 14);
     }
 
     @Override
+    @SuppressLint("NewApi")
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0) {
-            try {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                imageitem1.setImageBitmap(photo);
-                Intent intent=new Intent(getApplicationContext(),DrinkMenuDetails.class);
-                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 50, _bs);
-                intent.putExtra("byteArray", _bs.toByteArray());
-                startActivity(intent);
-            }
-            catch (NullPointerException e)
-            {
-                e.printStackTrace();
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            Uri imageUri = CropImage.getPickImageResultUri(this, data);
+
+            // For API >= 23 we need to check specifically that we have permissions to read external storage.
+            if (CropImage.isReadExternalStoragePermissionsRequired(this, imageUri)) {
+                // request permissions and handle the result in onRequestPermissionsResult()
+                mCropImageUri = imageUri;
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+            } else {
+                // no permissions required or already grunted, can start crop image activity
+                startCropImageActivity(imageUri);
             }
         }
 
-        if (requestCode == 1) {
-            try {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                imageitem2.setImageBitmap(photo);
-                Intent intent=new Intent(getApplicationContext(),DrinkMenuDetails.class);
-                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 50, _bs);
-                intent.putExtra("byteArray", _bs.toByteArray());
-                startActivity(intent);
-            }
-            catch (NullPointerException e)
-            {
-                e.printStackTrace();
+        // handle result of CropImageActivity
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                imageitem1.setImageURI(result.getUri());
+                imageUrl = result.getUri();
+                Toast.makeText(this, "Cropping successful" + result.getSampleSize(), Toast.LENGTH_LONG).show();
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
             }
         }
+    }
 
-        if (requestCode == 2) {
-            try {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                imageitem3.setImageBitmap(photo);
-                Intent intent=new Intent(getApplicationContext(),DrinkMenuDetails.class);
-                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 50, _bs);
-                intent.putExtra("byteArray", _bs.toByteArray());
-                startActivity(intent);
-            }
-            catch (NullPointerException e)
-            {
-                e.printStackTrace();
-            }
-        }
+    /**
+     * Start crop image activity for the given image.
+     */
+    private void startCropImageActivity(Uri imageUri) {
+        CropImage.activity(imageUri)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setMultiTouchEnabled(true)
+                .start(this);
+    }
 
-        if (requestCode == 3) {
-            try {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                imageitem4.setImageBitmap(photo);
-                Intent intent=new Intent(getApplicationContext(),DrinkMenuDetails.class);
-                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 50, _bs);
-                intent.putExtra("byteArray", _bs.toByteArray());
-                startActivity(intent);
-            }
-            catch (NullPointerException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        if (requestCode == 4) {
-            try {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                imageitem5.setImageBitmap(photo);
-                Intent intent=new Intent(getApplicationContext(),DrinkMenuDetails.class);
-                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 50, _bs);
-                intent.putExtra("byteArray", _bs.toByteArray());
-                startActivity(intent);
-            }
-            catch (NullPointerException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        if (requestCode == 5) {
-            try {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                imageitem6.setImageBitmap(photo);
-                Intent intent=new Intent(getApplicationContext(),DrinkMenuDetails.class);
-                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 50, _bs);
-                intent.putExtra("byteArray", _bs.toByteArray());
-                startActivity(intent);
-            }
-            catch (NullPointerException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        if (requestCode == 6) {
-            try {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                imageitem7.setImageBitmap(photo);
-                Intent intent=new Intent(getApplicationContext(),DrinkMenuDetails.class);
-                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 50, _bs);
-                intent.putExtra("byteArray", _bs.toByteArray());
-                startActivity(intent);
-            }
-            catch (NullPointerException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        if (requestCode == 7) {
-            try {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                imageitem8.setImageBitmap(photo);
-                Intent intent=new Intent(getApplicationContext(),DrinkMenuDetails.class);
-                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 50, _bs);
-                intent.putExtra("byteArray", _bs.toByteArray());
-                startActivity(intent);
-            }
-            catch (NullPointerException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        if (requestCode == 8) {
-            try {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                imageitem9.setImageBitmap(photo);
-                Intent intent=new Intent(getApplicationContext(),DrinkMenuDetails.class);
-                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 50, _bs);
-                intent.putExtra("byteArray", _bs.toByteArray());
-                startActivity(intent);
-            }
-            catch (NullPointerException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        if (requestCode == 9) {
-            try {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                imageitem10.setImageBitmap(photo);
-                Intent intent=new Intent(getApplicationContext(),DrinkMenuDetails.class);
-                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 50, _bs);
-                intent.putExtra("byteArray", _bs.toByteArray());
-                startActivity(intent);
-            }
-            catch (NullPointerException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        if (requestCode == 10) {
-            try {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                imageitem11.setImageBitmap(photo);
-                Intent intent=new Intent(getApplicationContext(),DrinkMenuDetails.class);
-                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 50, _bs);
-                intent.putExtra("byteArray", _bs.toByteArray());
-                startActivity(intent);
-            }
-            catch (NullPointerException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        if (requestCode == 11) {
-            try {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                imageitem12.setImageBitmap(photo);
-                Intent intent=new Intent(getApplicationContext(),DrinkMenuDetails.class);
-                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 50, _bs);
-                intent.putExtra("byteArray", _bs.toByteArray());
-                startActivity(intent);
-            }
-            catch (NullPointerException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        if (requestCode == 12) {
-            try {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                imageitem13.setImageBitmap(photo);
-                Intent intent=new Intent(getApplicationContext(),DrinkMenuDetails.class);
-                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 50, _bs);
-                intent.putExtra("byteArray", _bs.toByteArray());
-                startActivity(intent);
-            }
-            catch (NullPointerException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        if (requestCode == 13) {
-            try {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                imageitem14.setImageBitmap(photo);
-                Intent intent=new Intent(getApplicationContext(),DrinkMenuDetails.class);
-                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 50, _bs);
-                intent.putExtra("byteArray", _bs.toByteArray());
-                startActivity(intent);
-            }
-            catch (NullPointerException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        if (requestCode == 14) {
-            try {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                imageitem15.setImageBitmap(photo);
-                Intent intent=new Intent(getApplicationContext(),DrinkMenuDetails.class);
-                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 50, _bs);
-                intent.putExtra("byteArray", _bs.toByteArray());
-                startActivity(intent);
-            }
-            catch (NullPointerException e)
-            {
-                e.printStackTrace();
-            }
-        }
 
-    }*/
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        if (mCropImageUri != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            // required permissions granted, start crop image activity
+            startCropImageActivity(mCropImageUri);
+        } else {
+            Toast.makeText(this, "Cancelling, required permissions are not granted", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void chooseImage(int pos) {
+    }
+
+    @Override
+    public void showAlertDialog(final int pos) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(Drinkmenu.this, R.style.CustomDialogTheme);
+        View view = LayoutInflater.from(this).inflate(R.layout.activity_drink_menu_details, null);
+        et_name = (view.findViewById(R.id.edit_itemname));
+        imageitem1 = (view.findViewById(R.id.imageitem1));
+        et_price = (view.findViewById(R.id.edit_price));
+        final CheckBox check_veg = (view.findViewById(R.id.check_veg));
+        final CheckBox check_non_veg = (view.findViewById(R.id.check_non_veg));
+        TextView tv_save = (view.findViewById(R.id.saveitem));
+
+
+        imageitem1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CropImage.startPickImageActivity(Drinkmenu.this);
+            }
+        });
+
+
+        et_name.getText().toString();
+        et_price.getText().toString();
+
+        builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        tv_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                data.get(pos).setItem_image(imageUrl);
+                data.get(pos).setItem_name(et_name.getText().toString());
+                data.get(pos).setOriginal_price(et_price.getText().toString());
+                addFoodToMenu();
+                dataAdaapter.notifyDataSetChanged();
+
+            }
+        });
+
+
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }
+
+    private ArrayList<DrinkItem> drinkItems() {
+        ArrayList<DrinkItem> datumArrayList = new ArrayList<>();
+        for (int i = 0; i <= 10; i++) {
+            DrinkItem drinkItems = new DrinkItem();
+            drinkItems.setId("" + i);
+            datumArrayList.add(drinkItems);
+        }
+        return datumArrayList;
+    }
+
+    private void addFoodToMenu() {
+        JsonObject js = new JsonObject();
+        js.addProperty("menu_type", "1");
+        js.addProperty("drink", "1");
+        js.addProperty("business_id", "1567218728");
+        js.addProperty("owner_id", "33");
+        js.addProperty("menu_name", et_name.getText().toString());
+        js.addProperty("price", et_price.getText().toString());
+        js.addProperty("pic", "");
+        js.addProperty("discount", "5");
+
+
+        apiInterface = Api_Client.getClient().create(User_Service.class);
+        Call<Food_Items> call = apiInterface.saveFoodMenu("1", "1", "1567218728", "33", et_name.getText().toString(), et_price.getText().toString(), "", "5");
+
+        call.enqueue(new retrofit2.Callback<Food_Items>() {
+
+            @Override
+            public void onResponse(Call<Food_Items> call, Response<Food_Items> response) {
+                System.out.println("atag" + response.body());
+                if (response != null) {
+                    Food_Items userlist = response.body();
+                    if (userlist.getStatus().equals("success")) {
+                        Toast.makeText(Drinkmenu.this, "Added to menu", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Food_Items> call, Throwable t) {
+                Toast.makeText(Drinkmenu.this, "Request Failed" + t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
 
     public void MenuDetails(View view){
         Intent intent=new Intent(getApplicationContext(),DrinkMenuDetails.class);
@@ -421,11 +262,12 @@ public class Drinkmenu extends AppCompatActivity {
     }
 
     public void Foodmenu(View view) {
-        startActivity(new Intent(getApplicationContext(),Menuitems.class));
+        startActivity(new Intent(getApplicationContext(), FoodMenu.class));
     }
     public void onBackPressed()
     {
         startActivity(new Intent(getApplicationContext(),Businesspage.class));
 
     }
+
 }
